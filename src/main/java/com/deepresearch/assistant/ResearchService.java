@@ -2,8 +2,6 @@ package com.deepresearch.assistant;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -79,7 +77,19 @@ public class ResearchService {
         break;
       case "suggest":
         prompt.append(
-                "Based on the following content: suggest related topics and further reading. Format the response with clear headings and bullet points: \n\n");
+                "Based on the following content, provide:\n\n" +
+                        "**Related Topics:**\n" +
+                        "* List 3-5 related research areas with brief explanations\n\n" +
+                        "**Further Reading:**\n" +
+                        "* Suggest 3-5 books, papers, or articles\n\n" +
+                        "**Research Questions:**\n" +
+                        "* Generate 3 thought-provoking questions\n\n" +
+                        "**Keywords:**\n" +
+                        "* List 5-8 keywords for further search\n\n" +
+                        "Content: "
+        );
+//        prompt.append(
+//                "Based on the following content: suggest related topics and further reading. Format the response with clear headings and bullet points: \n\n");
         break;
       default:
         throw new IllegalArgumentException("Unknown operation: " + request.getOperation());
