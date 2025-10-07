@@ -3,7 +3,6 @@
 Spring Boot backend service for the Research Assistant Chrome Extension. This service integrates with Google Gemini AI to provide text summarization and research suggestions.
   
 ## Demo Video
-
 [![Watch the video](https://img.youtube.com/vi/otuJlxIWG94/hqdefault.jpg)](https://youtu.be/otuJlxIWG94)
 
 ## Prerequisites
