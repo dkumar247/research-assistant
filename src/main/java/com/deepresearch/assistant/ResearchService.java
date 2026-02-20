@@ -39,17 +39,23 @@ public class ResearchService {
             }
     );
 
-    String response = webClient.post()
-            .uri(geminiApiUrl + geminiApiKey)
-            .bodyValue(requestBody)
-            .retrieve()
-            .bodyToMono(String.class)
-            .block();
+    try {
+      String response = webClient.post()
+              .uri(geminiApiUrl + geminiApiKey)
+              .bodyValue(requestBody)
+              .retrieve()
+              .bodyToMono(String.class)
+              .block();
 
-    // Parse the response
-
-    // Return response
-    return extractTextFromResponse(response);
+      // Return response
+      return extractTextFromResponse(response);
+    } catch (org.springframework.web.reactive.function.client.WebClientResponseException.TooManyRequests e) {
+      return "Error: Gemini API rate limit exceeded. Please wait a moment and try again.";
+    } catch (org.springframework.web.reactive.function.client.WebClientResponseException e) {
+      return "Error from Gemini API: " + e.getStatusCode() + " - " + e.getResponseBodyAsString();
+    } catch (Exception e) {
+      return "An unexpected error occurred: " + e.getMessage();
+    }
   }
 
   private String extractTextFromResponse(String response) {
